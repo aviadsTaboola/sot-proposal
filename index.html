@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project SoT: A Proposal for Deeperdive</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutral (Stone) & Deep Teal -->
+    <!-- Application Structure Plan: A single-page, scrollable dashboard structure was chosen over a linear slide format to allow non-linear exploration. Users can get a high-level overview from the hero and benefits sections, or use the sticky navigation to jump directly to technical details like the data analysis, which is crucial for the algorithm team. This structure serves both business and technical audiences by layering information and making it accessible based on user interest, enhancing usability and comprehension of the SoT proposal. -->
+    <!-- Visualization & Content Choices: 
+        1. SoT Process Diagram: Goal: Organize/Explain. Method: HTML/CSS diagram. Interaction: Hover effects. Justification: A custom diagram is more visually integrated and engaging than a static image for explaining the core concept.
+        2. Performance Benchmark: Goal: Relate/Compare. Viz: Scatter Plot. Interaction: Hover tooltips. Justification: A scatter plot is the ideal method to visualize the relationship between two key metrics (speed and quality), instantly showing the "win-win" scenario. Library: Chart.js.
+        3. Use-Case Fit: Goal: Compare. Viz: Horizontal Bar Chart. Interaction: Hover tooltips. Justification: A bar chart provides a clear, direct comparison of SoT's performance across discrete categories, validating its suitability for summarization tasks. Library: Chart.js.
+        - All other data is presented in cards and tables for clarity and scannability.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 50vh;
+        }
+        .section-title {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: #1e293b; /* slate-800 */
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: #475569; /* slate-600 */
+            text-align: center;
+            max-width: 48rem;
+            margin: 0 auto 3rem;
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            padding: 1.5rem;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .nav-link {
+            transition: color 0.2s;
+        }
+        .nav-link:hover {
+            color: #0d9488; /* teal-600 */
+        }
+        .step-arrow {
+            color: #94a3b8; /* slate-400 */
+            font-size: 2rem;
+            line-height: 1;
+        }
+        .tab-button {
+            transition: all 0.2s;
+            border-bottom: 2px solid transparent;
+        }
+        .tab-button.active {
+            color: #0d9488; /* teal-600 */
+            border-bottom-color: #0d9488; /* teal-600 */
+        }
+    </style>
+</head>
+<body class="text-slate-700">
+
+    <header id="header" class="sticky top-0 bg-white/80 backdrop-blur-lg z-50 shadow-sm">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <span class="font-bold text-xl text-slate-800">Project SoT</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#problem" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600">The Challenge</a>
+                        <a href="#solution" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600">The Solution</a>
+                        <a href="#benefits" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600">The Benefits</a>
+                        <a href="#data" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600">The Data</a>
+                        <a href="#plan" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600">Next Steps</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="bg-white py-20 md:py-28">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h1 class="text-4xl md:text-6xl font-extrabold text-slate-800 leading-tight">
+                    Better, Faster, Cheaper Summaries
+                </h1>
+                <p class="mt-4 max-w-2xl mx-auto text-lg md:text-xl text-slate-600">
+                    A proposal to upgrade Deeperdive by leveraging Skeleton-of-Thought for a superior user experience and significant efficiency gains.
+                </p>
+                <div class="mt-8 flex justify-center">
+                    <a href="#problem" class="px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-teal-600 hover:bg-teal-700 md:py-4 md:text-lg md:px-10">
+                        Explore the Proposal
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="problem" class="py-16 md:py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="section-title">Our Current Summarization Bottlenecks</h2>
+                <p class="section-subtitle">To improve, we must first understand our current challenges. Our system faces three core issues that affect user experience, quality, and operational cost.</p>
+                <div class="mt-12 grid gap-8 md:grid-cols-3">
+                    <div class="card">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-teal-500 text-white">
+                            <span class="text-2xl">🕒</span>
+                        </div>
+                        <h3 class="mt-5 text-lg leading-6 font-medium text-slate-900">High Latency</h3>
+                        <p class="mt-2 text-base text-slate-500">
+                            Our current single-call, sequential decoding method can be slow for long articles, negatively impacting the user experience.
+                        </p>
+                    </div>
+                    <div class="card">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-teal-500 text-white">
+                            <span class="text-2xl">📉</span>
+                        </div>
+                        <h3 class="mt-5 text-lg leading-6 font-medium text-slate-900">Inconsistent Quality</h3>
+                        <p class="mt-2 text-base text-slate-500">
+                            Summaries can sometimes be unstructured "walls of text," making it hard for users to quickly grasp key points and insights.
+                        </p>
+                    </div>
+                    <div class="card">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-teal-500 text-white">
+                            <span class="text-2xl">💸</span>
+                        </div>
+                        <h3 class="mt-5 text-lg leading-6 font-medium text-slate-900">High Cost</h3>
+                        <p class="mt-2 text-base text-slate-500">
+                            Using powerful, expensive models for the entire summarization process is costly, especially as we scale our service.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="solution" class="py-16 md:py-24 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="section-title">The Solution: Skeleton-of-Thought (SoT)</h2>
+                <p class="section-subtitle">SoT is a two-step method inspired by how humans write: plan first, then execute. We call this the "Architect & Builder" approach, which breaks a large, slow task into smaller, parallelizable steps.</p>
+                <div class="mt-12 card">
+                    <div class="grid grid-cols-1 md:grid-cols-5 items-center gap-4 text-center">
+                        <div class="p-4 rounded-lg">
+                            <h4 class="font-bold text-slate-800">Article</h4>
+                            <p class="text-sm text-slate-500">Long-form text input</p>
+                        </div>
+                        <div class="step-arrow hidden md:block">→</div>
+                        <div class="p-4 bg-teal-50 rounded-lg border border-teal-200">
+                            <h4 class="font-bold text-teal-800">1. Skeleton Stage (Architect)</h4>
+                            <p class="text-sm text-teal-600">A powerful model creates a concise, logical blueprint of the summary.</p>
+                        </div>
+                        <div class="step-arrow hidden md:block">→</div>
+                        <div class="p-4 bg-indigo-50 rounded-lg border border-indigo-200">
+                            <h4 class="font-bold text-indigo-800">2. Parallel Expansion (Builder)</h4>
+                            <p class="text-sm text-indigo-600">A fast, efficient model expands each point of the blueprint simultaneously.</p>
+                        </div>
+                    </div>
+                     <div class="flex justify-center mt-4">
+                        <div class="step-arrow transform rotate-90 md:hidden">↓</div>
+                     </div>
+                    <div class="flex justify-center mt-4 md:mt-8">
+                         <div class="step-arrow hidden md:block transform -rotate-45 -translate-y-4">↘</div>
+                        <div class="p-6 bg-slate-100 rounded-lg border border-slate-200 w-full md:w-auto">
+                            <h4 class="font-bold text-slate-800 text-center">Final Structured Summary</h4>
+                            <p class="text-sm text-slate-600 text-center">A high-quality, easy-to-read summary is assembled.</p>
+                        </div>
+                         <div class="step-arrow hidden md:block transform rotate-45 -translate-y-4">↙</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="benefits" class="py-16 md:py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="section-title">The Triple Win</h2>
+                <p class="section-subtitle">Adopting SoT provides three clear, evidence-backed advantages that directly address our current bottlenecks and align with our strategic goals.</p>
+                <div class="mt-12 space-y-10 md:space-y-0 md:grid md:grid-cols-3 md:gap-x-8 md:gap-y-10">
+                    <div class="card text-center">
+                        <h3 class="text-5xl font-bold text-teal-600">2.39x</h3>
+                        <p class="mt-4 text-lg font-semibold text-slate-800">Faster Generation</p>
+                        <p class="mt-2 text-slate-500">By breaking the sequential bottleneck and generating sections in parallel, we can achieve significant speed-ups, as demonstrated across 12 different LLMs.</p>
+                    </div>
+                    <div class="card text-center">
+                        <h3 class="text-5xl font-bold text-indigo-600">Lower</h3>
+                        <p class="mt-4 text-lg font-semibold text-slate-800">Operational Cost</p>
+                        <p class="mt-2 text-slate-500">We use the expensive model only for the short skeleton. The bulk of the writing is offloaded to a more cost-effective and efficient open-source model.</p>
+                    </div>
+                    <div class="card text-center">
+                        <h3 class="text-5xl font-bold text-amber-600">Higher</h3>
+                        <p class="mt-4 text-lg font-semibold text-slate-800">Answer Quality</p>
+                        <p class="mt-2 text-slate-500">The structured output is judged as equal or better than the standard method in over 70% of cases. This is a quality upgrade with minimal risk.</p>
+                        <div class="mt-4 pt-4 border-t border-slate-200">
+                            <p class="text-sm font-medium text-slate-600 mb-2">SoT vs. Normal Generation (FastChat)</p>
+                            <div class="w-full bg-slate-200 rounded-full h-5 flex text-xs font-bold text-white text-center items-center">
+                                <div class="bg-teal-500 h-5 rounded-l-full flex items-center justify-center" style="width: 29.3%" title="Win Rate: 29.3%">
+                                    <span>29%</span>
+                                </div>
+                                <div class="bg-slate-400 h-5 flex items-center justify-center" style="width: 41.2%" title="Tie Rate: 41.2%">
+                                    <span>41%</span>
+                                </div>
+                                <div class="bg-red-400 h-5 rounded-r-full flex items-center justify-center" style="width: 29.5%" title="Lose Rate: 29.5%">
+                                    <span>30%</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-center space-x-4 mt-2 text-xs text-slate-500">
+                                <div class="flex items-center"><span class="w-2 h-2 rounded-full bg-teal-500 mr-1.5"></span>Win</div>
+                                <div class="flex items-center"><span class="w-2 h-2 rounded-full bg-slate-400 mr-1.5"></span>Tie</div>
+                                <div class="flex items-center"><span class="w-2 h-2 rounded-full bg-red-400 mr-1.5"></span>Lose</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="data" class="py-16 md:py-24 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="section-title">Data-Driven Decisions</h2>
+                <p class="section-subtitle">Our recommendation is based on the paper's rigorous evaluation. This section provides a deeper look at the data for the algorithm team, building confidence in the proposed solution.</p>
+                
+                <div class="max-w-3xl mx-auto mb-8 p-4 bg-slate-100 border-l-4 border-slate-300 rounded-r-lg">
+                    <p class="text-sm text-slate-600">
+                        <span class="font-bold text-slate-700">A Note on Metrics:</span> The quality evaluations cited from the paper use two LLM-based frameworks, <strong>FastChat</strong> and <strong>LLMZoo</strong>. In both, a powerful LLM (like GPT-4) acts as a judge, comparing the SoT-generated answer against the standard one to determine a "win," "tie," or "loss."
+                    </p>
+                </div>
+
+                <div class="w-full">
+                    <div class="border-b border-slate-200">
+                        <nav class="-mb-px flex space-x-8 justify-center" aria-label="Tabs">
+                            <button id="tab-btn-benchmark" class="tab-button active whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">Performance Benchmark</button>
+                            <button id="tab-btn-models" class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">Model Recommendation</button>
+                            <button id="tab-btn-usecase" class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">Use-Case Fit</button>
+                        </nav>
+                    </div>
+                    <div class="mt-8">
+                        <div id="tab-content-benchmark">
+                            <p class="text-center text-slate-600 mb-4">This chart plots models based on speed-up and quality. The top-right is ideal. Notably, across all tests, SoT's answers were judged as <strong>equal or better</strong> in over 70% of cases, highlighting a low-risk path to quality gains. Hover over points for details.</p>
+                            <div class="chart-container">
+                                <canvas id="performanceChart"></canvas>
+                            </div>
+                        </div>
+                        <div id="tab-content-models" class="hidden">
+                            <p class="text-center text-slate-600 mb-4">StableVicuna-13B is the top open-source model based on "Net Win Rate"—the net preference for SoT. When including ties, SoT's output is consistently judged as non-inferior, making it a safe and powerful upgrade.</p>
+                            <div class="flex justify-center">
+                                <div class="overflow-x-auto">
+                                    <table class="min-w-full divide-y divide-slate-200">
+                                        <thead class="bg-slate-50">
+                                            <tr>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Open-Source Model</th>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Net Win Rate (FastChat)</th>
+                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Net Win Rate (LLMZoo)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="bg-white divide-y divide-slate-200">
+                                            <tr class="bg-teal-50">
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">StableVicuna-13B</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 font-bold">Highest (~25%)</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 font-bold">Highest (~58%)</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">UltraLM-13B</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">High (~18%)</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">High (~35%)</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">Vicuna-13B V1.3</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">High (~15%)</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">High (~40%)</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab-content-usecase" class="hidden">
+                             <p class="text-center text-slate-600 mb-4">SoT excels at summarization tasks central to Deeperdive. For these key categories, it shows strong positive Net Win Rates, where its answers are considered equal or better in the majority of cases. This justifies our "Smart Fallback" strategy.</p>
+                            <div class="chart-container">
+                                <canvas id="categoryChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="plan" class="py-16 md:py-24 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="section-title">Proposed Next Steps</h2>
+                <p class="section-subtitle">We propose a phased approach to de-risk the project and ensure a smooth, data-driven rollout, moving from a small-scale test to full integration.</p>
+                <div class="mt-12 relative">
+                    <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-slate-200" aria-hidden="true"></div>
+                    <div class="relative space-y-12">
+                        <div class="flex items-center">
+                            <div class="w-1/2 pr-8 text-right">
+                                <div class="card">
+                                    <h3 class="text-lg font-bold text-slate-800">Phase 1: Proof of Concept</h3>
+                                    <p class="text-sm text-slate-500 mt-1">Build a prototype using StableVicuna-13B and test on a benchmark of 20 articles. Measure latency, quality, and cost.</p>
+                                </div>
+                            </div>
+                            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-teal-500 text-white flex items-center justify-center font-bold text-lg z-10">1-2w</div>
+                            <div class="w-1/2 pl-8"></div>
+                        </div>
+
+                        <div class="flex items-center">
+                            <div class="w-1/2 pr-8"></div>
+                            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-indigo-500 text-white flex items-center justify-center font-bold text-lg z-10">2w</div>
+                            <div class="w-1/2 pl-8 text-left">
+                                <div class="card">
+                                    <h3 class="text-lg font-bold text-slate-800">Phase 2: A/B Testing</h3>
+                                    <p class="text-sm text-slate-500 mt-1">If the PoC is successful, deploy the SoT method to a small percentage of users and monitor engagement and feedback.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center">
+                            <div class="w-1/2 pr-8 text-right">
+                                <div class="card">
+                                    <h3 class="text-lg font-bold text-slate-800">Phase 3: Full Integration</h3>
+                                    <p class="text-sm text-slate-500 mt-1">Based on positive A/B test results, we will plan and execute a full rollout across the Deeperdive platform.</p>
+                                </div>
+                            </div>
+                            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-slate-500 text-white flex items-center justify-center font-bold text-lg z-10">🚀</div>
+                            <div class="w-1/2 pl-8"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-800 text-slate-400">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; 2025 Project SoT Proposal by Aviad Shiber.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const chartData = {
+                performance: {
+                    datasets: [
+                        { label: 'StableVicuna-13B', data: [{x: 1.13, y: 0.25}], backgroundColor: '#0d9488', pointRadius: 10, pointHoverRadius: 12 },
+                        { label: 'GPT-4', data: [{x: 1.45, y: 0.3}], backgroundColor: '#4f46e5', pointRadius: 8, pointHoverRadius: 10 },
+                        { label: 'Vicuna-13B V1.3', data: [{x: 1.48, y: 0.23}], backgroundColor: '#64748b', pointRadius: 8, pointHoverRadius: 10 },
+                        { label: 'ChatGPT-3.5', data: [{x: 1.25, y: 0.22}], backgroundColor: '#64748b', pointRadius: 8, pointHoverRadius: 10 },
+                        { label: 'UltraLM-13B', data: [{x: 1.55, y: 0.14}], backgroundColor: '#64748b', pointRadius: 8, pointHoverRadius: 10 },
+                        { label: 'Vicuna-33B V1.3', data: [{x: 1.5, y: 0.05}], backgroundColor: '#64748b', pointRadius: 8, pointHoverRadius: 10 },
+                        { label: 'LLaMA2-Chat-7B', data: [{x: 1.62, y: 0.0}], backgroundColor: '#64748b', pointRadius: 8, pointHoverRadius: 10 },
+                        { label: 'LLaMA2-Chat-13B', data: [{x: 1.6, y: -0.08}], backgroundColor: '#ef4444', pointRadius: 8, pointHoverRadius: 10 },
+                        { label: 'Claude', data: [{x: 1.15, y: -0.15}], backgroundColor: '#ef4444', pointRadius: 8, pointHoverRadius: 10 },
+                    ]
+                },
+                categories: {
+                    labels: ['Knowledge', 'Generic', 'Common-Sense', 'Counterfactual', 'Roleplay', 'Writing', 'Fermi', 'Math', 'Coding'],
+                    datasets: [{
+                        label: 'Net Win Rate (FastChat)',
+                        data: [15, 12, 8, 28, 5, -35, -38, -55, -60],
+                        backgroundColor: (context) => {
+                            const value = context.raw;
+                            return value >= 0 ? 'rgba(13, 148, 136, 0.7)' : 'rgba(239, 68, 68, 0.7)';
+                        },
+                        borderColor: (context) => {
+                             const value = context.raw;
+                            return value >= 0 ? 'rgba(13, 148, 136, 1)' : 'rgba(239, 68, 68, 1)';
+                        },
+                        borderWidth: 1
+                    }]
+                }
+            };
+            
+            let performanceChart, categoryChart;
+
+            const initPerformanceChart = () => {
+                const ctx = document.getElementById('performanceChart').getContext('2d');
+                performanceChart = new Chart(ctx, {
+                    type: 'scatter',
+                    data: chartData.performance,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) label += ': ';
+                                        label += `(${context.parsed.x.toFixed(2)}x Speed-up, ${context.parsed.y * 100}% Net Win)`;
+                                        return label;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                type: 'linear',
+                                position: 'bottom',
+                                title: { display: true, text: 'Speed-up (Higher is Better →)' },
+                                min: 1.0
+                            },
+                            y: {
+                                title: { display: true, text: 'Net Win Rate (Quality)' },
+                                ticks: {
+                                    callback: value => `${(value * 100).toFixed(0)}%`
+                                }
+                            }
+                        }
+                    }
+                });
+            };
+
+            const initCategoryChart = () => {
+                const ctx = document.getElementById('categoryChart').getContext('2d');
+                categoryChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: chartData.categories,
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                             tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return `Net Win Rate: ${context.raw.toFixed(1)}%`;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                title: { display: true, text: 'Net Win Rate (%)' },
+                                ticks: {
+                                    callback: value => `${value}%`
+                                }
+                            },
+                            y: { grid: { display: false } }
+                        }
+                    }
+                });
+            };
+
+            const tabs = [
+                { btn: 'tab-btn-benchmark', content: 'tab-content-benchmark', init: initPerformanceChart, chart: () => performanceChart },
+                { btn: 'tab-btn-models', content: 'tab-content-models', init: null, chart: () => null },
+                { btn: 'tab-btn-usecase', content: 'tab-content-usecase', init: initCategoryChart, chart: () => categoryChart },
+            ];
+            
+            tabs.forEach(tab => {
+                document.getElementById(tab.btn).addEventListener('click', () => {
+                    tabs.forEach(t => {
+                        document.getElementById(t.btn).classList.remove('active');
+                        document.getElementById(t.content).classList.add('hidden');
+                        if (t.chart && t.chart()) t.chart().destroy();
+                    });
+                    document.getElementById(tab.btn).classList.add('active');
+                    document.getElementById(tab.content).classList.remove('hidden');
+                    if(tab.init) tab.init();
+                });
+            });
+
+            initPerformanceChart();
+            
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                       const headerOffset = document.getElementById('header').offsetHeight;
+                       const elementPosition = targetElement.getBoundingClientRect().top;
+                       const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                       
+                       window.scrollTo({
+                           top: offsetPosition,
+                           behavior: "smooth"
+                       });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
