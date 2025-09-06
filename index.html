@@ -90,6 +90,7 @@
                     <div class="ml-10 flex items-baseline space-x-4">
                         <a href="#problem" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600">The Challenge</a>
                         <a href="#solution" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600">The Solution</a>
+                        <a href="#example" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600">SoT in Action</a>
                         <a href="#benefits" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600">The Benefits</a>
                         <a href="#data" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600">The Data</a>
                         <a href="#plan" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-slate-600">Next Steps</a>
@@ -183,6 +184,76 @@
                             <p class="text-sm text-slate-600 text-center">A high-quality, easy-to-read summary is assembled.</p>
                         </div>
                          <div class="step-arrow hidden md:block transform rotate-45 -translate-y-4">↙</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="example" class="py-16 md:py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="section-title">SoT in Action: A Real Example</h2>
+                <p class="section-subtitle">Let's walk through a tangible example to see the difference SoT makes in structure, readability, and quality.</p>
+        
+                <div class="card p-6 md:p-8 space-y-8">
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-4">The Input</h3>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                                <h4 class="font-semibold text-slate-700">Source Article:</h4>
+                                <a href="https://www.usatoday.com/story/news/politics/2025/09/06/trump-war-department-never-fought-to-win/86014351007/" target="_blank" class="text-sm text-teal-600 hover:underline break-all">usatoday.com/.../trump-war-department...</a>
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                                <h4 class="font-semibold text-slate-700">User Question:</h4>
+                                <p class="text-slate-600 italic">"what was the last thing trump said?"</p>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <hr class="border-slate-200">
+        
+                    <div class="grid lg:grid-cols-2 gap-8 items-start">
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-800 mb-2">Standard Sequential Answer</h3>
+                            <p class="text-sm text-slate-500 mb-4">The typical output is a dense block of text, making it hard to quickly scan for key information.</p>
+                            <div class="bg-orange-50 p-4 rounded-lg border border-orange-200 text-orange-900 text-sm">
+                                <p>The last significant statement made by President Donald Trump was during an event where he addressed concerns regarding vaccine mandates. He emphasized that Americans should take vaccines that are "not controversial," distinguishing between different types of vaccines. This comment came amidst controversies surrounding Florida's plans to phase out vaccine mandates for schoolchildren and followed on-going debates within the Trump administration regarding vaccine policies under Health and Human Services Secretary Robert F. Kennedy Jr.</p><br>
+                                <p>This statement reflects Trump's positioning amidst diverse national and international issues. Another significant action includes his executive order renaming the Department of Defense as "The Department of War," an effort aimed at promoting a "warrior ethos" within the armed forces. This move stirred discussions about the legal and procedural ramifications, emphasizing Trump's approach to redefining aspects of U.S. military structure and cultural institutions.</p>
+                            </div>
+                        </div>
+        
+                        <div>
+                            <h3 class="text-xl font-bold text-teal-800 mb-2">The SoT Process</h3>
+                            <p class="text-sm text-slate-500 mb-4">SoT first creates a plan, then expands each point in parallel, resulting in a structured, scannable answer.</p>
+                            <div class="space-y-4">
+                                <div class="bg-teal-50 p-4 rounded-lg border border-teal-200">
+                                    <h4 class="font-semibold text-teal-800">Phase 1: Skeleton Generation</h4>
+                                    <ol class="list-decimal list-inside text-sm text-teal-700 mt-2 space-y-1">
+                                        <li>Address vaccine mandate comments.</li>
+                                        <li>Specify "not controversial" vaccines.</li>
+                                        <li>Connect to RFK Jr. and Florida policy.</li>
+                                        <li>Cover DoD renaming to "War Department".</li>
+                                        <li>Explain "warrior ethos" goal.</li>
+                                    </ol>
+                                </div>
+                                <div class="text-center text-slate-400 font-bold text-2xl">↓</div>
+                                <div class="bg-indigo-50 p-4 rounded-lg border border-indigo-200">
+                                     <h4 class="font-semibold text-indigo-800">Phase 2: Parallel Expansion</h4>
+                                     <p class="text-sm text-indigo-700 mt-1">Each point above is sent to a fast model to be expanded at the same time.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <hr class="border-slate-200">
+        
+                    <div>
+                         <h3 class="text-xl font-bold text-slate-800 mb-4 text-center">The Final SoT Summary</h3>
+                         <div class="max-w-3xl mx-auto bg-green-50 p-4 rounded-lg border border-green-200 text-sm text-green-900 space-y-3">
+                            <p><strong>Vaccine Mandate Comments:</strong> President Donald Trump's last significant statement addressed vaccine mandates, where he emphasized that Americans should take vaccines that are "not controversial," distinguishing between different types.</p>
+                            <p><strong>Administration Context:</strong> This comment was made amidst controversies surrounding Florida's plans to phase out vaccine mandates for schoolchildren and ongoing debates within his administration regarding policies under HHS Secretary Robert F. Kennedy Jr.</p>
+                            <p><strong>Department of War Renaming:</strong> In another significant action, Trump issued an executive order to rename the Department of Defense as "The Department of War."</p>
+                            <p><strong>Stated Goal:</strong> The stated goal of this renaming was to promote a "warrior ethos" within the armed forces, reflecting Trump's approach to redefining U.S. military culture.</p>
+                         </div>
                     </div>
                 </div>
             </div>
@@ -301,7 +372,7 @@
             </div>
         </section>
 
-        <section id="plan" class="py-16 md:py-24 bg-white">
+        <section id="plan" class="py-16 md:py-24">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="section-title">Proposed Next Steps</h2>
                 <p class="section-subtitle">We propose a phased approach to de-risk the project and ensure a smooth, data-driven rollout, moving from a small-scale test to full integration.</p>
